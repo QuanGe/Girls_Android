@@ -5,4 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 	<string name="skip">跳过</string>
+	
+	<!-- MainActivity -->
+    <string name="qiubai">笑话</string>
+    <string name="douban">美女</string>
+    
 </resources>

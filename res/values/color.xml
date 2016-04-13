@@ -9,4 +9,7 @@
     <color name="title_color">#222222</color>
     <color name="red_color">#ed5565</color>
     <color name="red">#CB0A0A</color>
+    <color name="navg_back_btn_bar">#F2F2F2</color>
+    <color name="bottom_tab_text_true">#009FBF</color>
+    <color name="color_two">#0494ba</color>
 </resources>

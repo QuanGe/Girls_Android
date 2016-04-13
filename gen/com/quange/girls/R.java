@@ -15,7 +15,10 @@ public final class R {
         public static final int background_line=0x7f040001;
         public static final int black=0x7f040004;
         public static final int black_deep=0x7f040000;
+        public static final int bottom_tab_text_true=0x7f04000a;
+        public static final int color_two=0x7f04000b;
         public static final int line_color=0x7f040002;
+        public static final int navg_back_btn_bar=0x7f040009;
         public static final int red=0x7f040008;
         public static final int red_color=0x7f040007;
         public static final int title_color=0x7f040006;
@@ -34,17 +37,32 @@ public final class R {
     }
     public static final class drawable {
         public static final int btn_cancel=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int splashscreen=0x7f020002;
+        public static final int btn_douban_drawable=0x7f020001;
+        public static final int btn_qiubai_drawable=0x7f020002;
+        public static final int douban_normal=0x7f020003;
+        public static final int douban_seleted=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int qiubai_normal=0x7f020006;
+        public static final int qiubai_selected=0x7f020007;
+        public static final int splashscreen=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f090002;
-        public static final int btn_skip_splashimage=0x7f090001;
-        public static final int iv_splash=0x7f090000;
+        public static final int action_settings=0x7f090008;
+        public static final int btn_skip_splashimage=0x7f090004;
+        public static final int iv_icon=0x7f090006;
+        public static final int iv_splash=0x7f090003;
+        public static final int realtabcontent=0x7f090000;
+        public static final int tabhost=0x7f090001;
+        public static final int tabs=0x7f090002;
+        public static final int textView1=0x7f090005;
+        public static final int tv_icon=0x7f090007;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_splash=0x7f030001;
+        public static final int fragment_douban=0x7f030002;
+        public static final int fragment_qiubai=0x7f030003;
+        public static final int tab_item_view=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -52,7 +70,11 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
+        public static final int douban=0x7f060005;
         public static final int hello_world=0x7f060001;
+        /**  MainActivity 
+         */
+        public static final int qiubai=0x7f060004;
         public static final int skip=0x7f060003;
     }
     public static final class style {

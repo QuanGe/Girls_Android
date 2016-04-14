@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/qiubai_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/navg_back_btn_bar"
+        android:divider="@color/line_color"
+        android:dividerHeight="1px"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:headerDividersEnabled="false"
+        android:listSelector="@drawable/onclick_select_curri_group"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+   
+
+</RelativeLayout>

@@ -2,6 +2,8 @@ package com.quange.viewModel;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
@@ -85,14 +87,17 @@ public class GAPIManager {
 		StringRequest request = new StringRequest("http://m2.qiushibaike.com/article/list/"+api+"?page="+pageNum, new Listener<String>() {
 			public void onResponse(String body) {
 				try {
-					List<GQiuBaiModel> result = new Gson().fromJson(body,
+					JSONObject jsObj = new JSONObject(body);
+					
+					String r = jsObj.getString("items");
+					List<GQiuBaiModel> result = new Gson().fromJson(r,
 							new TypeToken<List<GQiuBaiModel>>() {
 							}.getType());
 					
 					listener.onResponse(result);
 					
 				} catch (Exception e) {
-					
+					System.out.println("caocaocaocaocao");
 				}
 				
 			}

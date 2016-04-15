@@ -1,0 +1,16 @@
+
+*.class
+
+*.class
+
+bin/classes/com/quange/viewModel/GAPIManager$1.class
+
+bin/classes/com/quange/viewModel/GAPIManager.class
+
+bin/classes/com/quange/girls/DouBanFragment.class
+
+*.class
+
+*.apk
+
+*.ap_

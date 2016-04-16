@@ -2,6 +2,7 @@ package com.quange.viewModel;
 
 import java.util.List;
 
+
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -17,6 +18,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.quange.girls.R;
 import com.quange.model.GQiuBaiModel;
 
 public class GAPIManager {
@@ -24,10 +27,16 @@ public class GAPIManager {
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     private static Context theContext;
+    public static DisplayImageOptions options;
     private GAPIManager(Context context) {
     	theContext = context;
     	requestQueue = getRequestQueue();
 
+    	options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher)
+				.showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher)
+				.cacheInMemory(true).cacheOnDisc(true)
+				// .displayer(new RoundedBitmapDisplayer(20))
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
     	imageLoader = new ImageLoader(requestQueue,
                 new ImageLoader.ImageCache() {
                     private final LruCache<String, Bitmap>

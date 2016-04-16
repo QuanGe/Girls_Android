@@ -14,3 +14,5 @@ bin/classes/com/quange/girls/DouBanFragment.class
 *.apk
 
 *.ap_
+
+*.class

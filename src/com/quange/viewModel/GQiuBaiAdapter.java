@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GQiuBaiAdapter  extends BaseAdapter {
@@ -43,7 +44,7 @@ public class GQiuBaiAdapter  extends BaseAdapter {
 			cv = View.inflate(mAct, R.layout.list_item_qiubai, null);
 
 			hv.contentTv = (TextView) cv.findViewById(R.id.tv_title);
-			
+			hv.contentIv = (ImageView) cv.findViewById(R.id.contentImageView);
 			cv.setTag(hv);
 		} else {
 			hv = (HoldView) cv.getTag();
@@ -56,6 +57,7 @@ public class GQiuBaiAdapter  extends BaseAdapter {
 	private class HoldView {
 	
 		private TextView contentTv; // name
+		private ImageView contentIv;
 		
 	}
 }

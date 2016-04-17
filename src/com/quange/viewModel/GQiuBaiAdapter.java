@@ -3,6 +3,8 @@ package com.quange.viewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import com.android.volley.toolbox.*;
 import com.quange.girls.R;
 import com.quange.model.GQiuBaiModel;
 
@@ -45,6 +47,7 @@ public class GQiuBaiAdapter  extends BaseAdapter {
 
 			hv.contentTv = (TextView) cv.findViewById(R.id.tv_title);
 			hv.contentIv = (ImageView) cv.findViewById(R.id.contentImageView);
+			GAPIManager.getInstance(mAct).getImageLoader().displayImage("http://ww1.sinaimg.cn/large/0060lm7Tgw1f301kspjm8j30dw0dw403.jpg", hv.contentIv, GAPIManager.getInstance(mAct).options);
 			cv.setTag(hv);
 		} else {
 			hv = (HoldView) cv.getTag();

@@ -13,48 +13,62 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.ImageLoader;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+
 import com.quange.girls.R;
 import com.quange.model.GQiuBaiModel;
 
 public class GAPIManager {
 	private static GAPIManager sharedInstance;
     private RequestQueue requestQueue;
-    private ImageLoader imageLoader;
+    public static ImageLoader imageLoader = ImageLoader.getInstance();
     private static Context theContext;
     public static DisplayImageOptions options;
-    private GAPIManager(Context context) {
+    private GAPIManager(final Context context) {
     	theContext = context;
     	requestQueue = getRequestQueue();
 
-    	options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher)
+    	initImageLoader();
+		new Thread() {
+			public void run() {
+				initImageLoader(context);
+			}
+		}.start();
+    	
+    }
+    
+    public static void initImageLoader(Context context) {
+		// This configuration tuning is custom. You can tune every option,
+		// you may tune some of them, or you can create default configuration by
+		// ImageLoaderConfiguration.createDefault(this); method.
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+				.threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+				.discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO)
+				.writeDebugLogs() // Remove for release app
+				.build();
+
+		// Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(config);
+
+	}
+
+	void initImageLoader() {
+		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher)
 				.showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher)
 				.cacheInMemory(true).cacheOnDisc(true)
 				// .displayer(new RoundedBitmapDisplayer(20))
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
-    	imageLoader = new ImageLoader(requestQueue,
-                new ImageLoader.ImageCache() {
-                    private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(20);
-
-                    @Override
-                    public Bitmap getBitmap(String url) {
-                        return cache.get(url);
-                    }
-
-                    @Override
-                    public void putBitmap(String url, Bitmap bitmap) {
-                        cache.put(url, bitmap);
-                    }
-
-                });
-
-    }
+		
+	}
 
     public static synchronized GAPIManager getInstance(Context context) {
         if (sharedInstance == null) {

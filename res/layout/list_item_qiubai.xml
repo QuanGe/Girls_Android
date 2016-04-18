@@ -48,7 +48,8 @@
         android:layout_marginLeft="12dip"
         android:layout_marginRight="12dip"
         android:layout_marginBottom="4dip"
-        android:textSize="16sp"
+        android:lineSpacingMultiplier = "1.3"
+        android:textSize="14sp"
         android:textColor="#222222"/>
     <ImageView
         android:id="@+id/contentImageView"

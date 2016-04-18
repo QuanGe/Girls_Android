@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -72,11 +73,11 @@ public class GQiuBaiAdapter  extends BaseAdapter {
 			String userId = ls.user.id+"";
 			String prefixUserId = userId.substring(0, userId.length()-4);
 			String userImageURL = "http://pic.qiushibaike.com/system/avtnew/"+prefixUserId+"/"+userId+"/medium/"+icon;
-			GAPIManager.getInstance(mAct).getImageLoader().displayImage(userImageURL, hv.userIcon, GAPIManager.getInstance(mAct).options);
+			GAPIManager.getInstance(mAct).getImageLoader().displayImage(userImageURL, hv.userIcon, GAPIManager.getInstance(mAct).userIconOptions);
 		}
 		else
 		{
-			hv.userIcon.setImageResource(R.drawable.ic_launcher);
+			hv.userIcon.setImageResource(R.drawable.qiubai_normal);
 			hv.userNickName.setText("匿名");
 		}
 		
@@ -89,7 +90,7 @@ public class GQiuBaiAdapter  extends BaseAdapter {
 			LinearLayout.LayoutParams llp = new LayoutParams((int) (screenWidth-24*density),height );
 			llp.leftMargin = (int) (12*density);
 			llp.bottomMargin = (int) (2*density);
-			
+			hv.contentIv.setScaleType(ScaleType.FIT_XY);
 			hv.contentIv.setLayoutParams(llp);
 		}
 		if(!ls.format.equals("word"))

@@ -33,6 +33,7 @@ public class GAPIManager {
     public static ImageLoader imageLoader = ImageLoader.getInstance();
     private static Context theContext;
     public static DisplayImageOptions options;
+    public static DisplayImageOptions userIconOptions;
     private GAPIManager(final Context context) {
     	theContext = context;
     	requestQueue = getRequestQueue();
@@ -62,8 +63,14 @@ public class GAPIManager {
 	}
 
 	void initImageLoader() {
-		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher)
+		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.n)
+				.showImageForEmptyUri(R.drawable.n).showImageOnFail(R.drawable.n)
+				.cacheInMemory(true).cacheOnDisc(true)
+				// .displayer(new RoundedBitmapDisplayer(20))
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
+		
+		userIconOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.qiubai_normal)
+				.showImageForEmptyUri(R.drawable.qiubai_normal).showImageOnFail(R.drawable.qiubai_normal)
 				.cacheInMemory(true).cacheOnDisc(true)
 				// .displayer(new RoundedBitmapDisplayer(20))
 				.bitmapConfig(Bitmap.Config.RGB_565).build();

@@ -68,6 +68,7 @@ public class GQiuBaiListView implements OnItemClickListener{
 		lList.setMode(Mode.PULL_FROM_END);
 		lList.setAdapter(lAdapter);
 		lList.setOnRefreshListener(orfListener2());
+	
 		lList.setOnItemClickListener(this);
 		lList.setOnScrollListener(new OnScrollListener() {
 			boolean isLastRow = false;

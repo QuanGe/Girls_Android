@@ -1,5 +1,7 @@
 package com.quange.model;
 
+import android.util.DisplayMetrics;
+
 /**
  * 糗百数据模型
  * 
@@ -70,4 +72,5 @@ public class GQiuBaiModel {
 	
 		
 	}
+	
 }

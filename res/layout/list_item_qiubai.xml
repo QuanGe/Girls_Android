@@ -3,7 +3,43 @@
     android:id="@+id/qiubaiListItem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    
     android:orientation="vertical" >
+    
+	<LinearLayout
+	    android:id="@+id/userInfo"
+	    android:layout_width="match_parent"
+	    android:layout_height="46dip"
+	    android:background="@color/white"
+	    android:orientation="horizontal" >
+	    
+	     <com.quange.views.RoundImageView
+            android:id="@+id/userIcon"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            
+            android:layout_marginTop="3dip"
+        	android:layout_marginLeft="12dip"
+        	android:layout_marginRight="12dip"
+        	android:layout_marginBottom="3dip"
+             >
+        </com.quange.views.RoundImageView>
+        
+	     <TextView
+        android:id="@+id/userNickName"
+        android:layout_width="wrap_content"
+        android:layout_height="20dip"
+        android:layout_marginTop="13dip"
+        android:layout_marginLeft="0dip"
+        android:layout_marginRight="12dip"
+        android:layout_marginBottom="13dip"
+        android:textSize="16sp"
+        android:textColor="#c3c3c3"/>
+    
+	</LinearLayout>
+	    
+        
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="fill_parent"
@@ -23,5 +59,7 @@
         android:layout_marginRight="12dip"
         android:layout_marginBottom="4dip"
         />
+
+  
 
 </LinearLayout>

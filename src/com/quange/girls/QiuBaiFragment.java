@@ -50,35 +50,8 @@ public class QiuBaiFragment extends Fragment {
 				return qiubaiViewPaper.getChildAt(position);
 			}
 		});
-//		RequestQueue queue = Volley.newRequestQueue(getActivity());
-//		StringRequest request = new StringRequest("http://m2.qiushibaike.com/article/list/latest?count=20&page=1", mOOkListener(), mOErrListener());
-//		queue.add(request);
-		
-		
+
 		return fgmView;
 	}
-	/*
-	private Listener<String> mOOkListener() {
-		return new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				try {
-					JSONObject jsObj = new JSONObject(response);
-					JSONObject jsData = jsObj.getJSONObject("items");
-					System.out.println(jsData);
-				} catch (Exception e) {
-					
-				}
-			}
-		};
-	}
 	
-	private ErrorListener mOErrListener() {
-		return new ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				System.out.println(error);
-			}
-		};
-	}*/
 }

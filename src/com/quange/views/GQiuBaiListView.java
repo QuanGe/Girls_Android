@@ -3,29 +3,28 @@ package com.quange.views;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONObject;
-
-
-
 import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.quange.girls.R;
 import com.quange.model.GQiuBaiModel;
 import com.quange.viewModel.GAPIManager;
 import com.quange.viewModel.GQiuBaiAdapter;
 
 import android.app.Activity;
-import android.content.Intent;
+
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
@@ -65,7 +64,7 @@ public class GQiuBaiListView implements OnItemClickListener{
 		lList = (PullToRefreshListView) mView.findViewById(R.id.qiubai_list);
 		
 		lAdapter = new GQiuBaiAdapter(mAct, mLSList);
-		lList.setMode(Mode.PULL_FROM_END);
+		lList.setMode(Mode.BOTH);
 		lList.setAdapter(lAdapter);
 		lList.setOnRefreshListener(orfListener2());
 	
@@ -105,15 +104,22 @@ public class GQiuBaiListView implements OnItemClickListener{
 				}
 			}
 		});
+		
+		lList.post(new Runnable() {
+		      @Override public void run() {
+		    	  lList.setRefreshing(true);
+		      }
+		 });
+		
 	}
 
-	public void refresh(boolean isRefresh) {
+	public void refresh(final boolean isRefresh) {
 		
 			GAPIManager.getInstance(mAct).fetchQiuBai(isRefresh?1:2, qiubaiType, new Listener<List<GQiuBaiModel>>(){
 				@Override
 				public void onResponse(List<GQiuBaiModel> response) {
-					
-					mLSList.clear();
+					if(isRefresh)
+						mLSList.clear();
 					mLSList.addAll(response);
 					lAdapter.notifyDataSetChanged();
 					

@@ -16,11 +16,11 @@ import android.widget.TabHost.OnTabChangeListener;
 public class MainActivity extends FragmentActivity {
 
 	public static FragmentTabHost mTabHost;
-	private Class<?> fragmentArray[] = {DouBanFragment.class,QiuBaiFragment.class};
-	private int titleArray[] = {R.string.douban,R.string.qiubai};
+	private Class<?> fragmentArray[] = {QiuBaiFragment.class,DouBanFragment.class};
+	private int titleArray[] = {R.string.qiubai,R.string.douban};
 	private Resources re;
 	private TextView tv[] = { null, null };
-	private int iconArray[] = {R.drawable.btn_douban_drawable,R.drawable.btn_qiubai_drawable};
+	private int iconArray[] = {R.drawable.btn_qiubai_drawable,R.drawable.btn_douban_drawable};
 	private View mseduView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

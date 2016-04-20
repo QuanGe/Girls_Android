@@ -3,50 +3,48 @@ package com.quange.views;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.volley.VolleyError;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.quange.girls.R;
-import com.quange.model.GQiuBaiModel;
-import com.quange.viewModel.GAPIManager;
-import com.quange.viewModel.GQiuBaiAdapter;
-
 import android.app.Activity;
-
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
-
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class GQiuBaiListView implements OnItemClickListener{
+import com.android.volley.VolleyError;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.quange.girls.R;
+import com.quange.model.GDouBanModel;
+
+import com.quange.viewModel.GAPIManager;
+import com.quange.viewModel.GDouBanAdapter;
+
+
+public class GDouBanGridView implements OnItemClickListener{
 	private View mView;
 	private Activity mAct;
-	private PullToRefreshListView lList;
-	private GQiuBaiAdapter lAdapter;
-	private List<GQiuBaiModel> mLSList = new ArrayList<GQiuBaiModel>();
+	private PullToRefreshGridView lList;
+	private GDouBanAdapter lAdapter;
+	private List<GDouBanModel> mLSList = new ArrayList<GDouBanModel>();
 	private RelativeLayout rlW;
 	private TextView tvCW;
 	private String appPath;
-	private int qiubaiType;
+	private int doubanType;
 	private int mCurPage = 1;
-	
-	public GQiuBaiListView(Activity act, int type) {
+	public GDouBanGridView(Activity act, int type) {
 		super();
 		this.mAct = act;
-		this.qiubaiType = type;
-		mView = View.inflate(mAct, R.layout.view_qiubai, null);
+		this.doubanType = type;
+		mView = View.inflate(mAct, R.layout.view_douban, null);
 		appPath = mAct.getApplicationContext().getFilesDir().getAbsolutePath();
 		initView();
 	}
@@ -62,9 +60,9 @@ public class GQiuBaiListView implements OnItemClickListener{
 
 	// 初始化设置
 	private void initView() {
-		lList = (PullToRefreshListView) mView.findViewById(R.id.qiubai_list);
+		lList = (PullToRefreshGridView) mView.findViewById(R.id.douban_gridView);
 		
-		lAdapter = new GQiuBaiAdapter(mAct, mLSList);
+		lAdapter = new GDouBanAdapter(mAct, mLSList);
 		lList.setMode(Mode.BOTH);
 		lList.setAdapter(lAdapter);
 		lList.setOnRefreshListener(orfListener2());
@@ -106,19 +104,27 @@ public class GQiuBaiListView implements OnItemClickListener{
 			}
 		});
 		
-		lList.post(new Runnable() {
-		      @Override public void run() {
-		    	  lList.setRefreshing(true);
-		      }
-		 });
 		
+		
+	}
+	
+	public void firstLoadData()
+	{
+		if(mLSList.size()==0)
+		{
+			lList.post(new Runnable() {
+			      @Override public void run() {
+			    	  lList.setRefreshing(true);
+			      }
+			 });
+		}
 	}
 
 	public void refresh(final boolean isRefresh) {
-			mCurPage = isRefresh ? 1 : ++mCurPage ;
-			GAPIManager.getInstance(mAct).fetchQiuBai(mCurPage, qiubaiType, new Listener<List<GQiuBaiModel>>(){
+		mCurPage = isRefresh ? 1 : ++mCurPage ;
+			GAPIManager.getInstance(mAct).fetchDouBan(mCurPage, doubanType, new Listener<List<GDouBanModel>>(){
 				@Override
-				public void onResponse(List<GQiuBaiModel> response) {
+				public void onResponse(List<GDouBanModel> response) {
 					if(isRefresh)
 						mLSList.clear();
 					mLSList.addAll(response);
@@ -138,17 +144,17 @@ public class GQiuBaiListView implements OnItemClickListener{
 	}
 
 
-	private OnRefreshListener2<ListView> orfListener2() {
-		return new OnRefreshListener2<ListView>() {
+	private OnRefreshListener2<GridView> orfListener2() {
+		return new OnRefreshListener2<GridView>() {
 			@Override
-			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+			public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
 				
 				refresh(true);
 				stoprefresh(refreshView);
 			}
 
 			@Override
-			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+			public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
 				
 				refresh(false);
 				stoprefresh(refreshView);
@@ -156,7 +162,7 @@ public class GQiuBaiListView implements OnItemClickListener{
 		};
 	}
 
-	protected void stoprefresh(final PullToRefreshBase<ListView> refreshView) {
+	protected void stoprefresh(final PullToRefreshBase<GridView> refreshView) {
 		refreshView.postDelayed(new Runnable() {
 			@Override
 			public void run() {
@@ -171,6 +177,5 @@ public class GQiuBaiListView implements OnItemClickListener{
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		
 	}
-
 
 }

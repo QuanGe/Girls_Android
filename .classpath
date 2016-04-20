@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="nineOldAndroids-src"/>
+	<classpathentry kind="src" path="jsoup-src"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

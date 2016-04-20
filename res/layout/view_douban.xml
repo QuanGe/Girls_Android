@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <com.handmark.pulltorefresh.library.PullToRefreshGridView
+        android:id="@+id/douban_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+      
+        android:listSelector="#00000000"
+        android:numColumns="2"
+        android:paddingTop="5dip"
+        android:paddingLeft="7dip"
+        android:paddingRight="7dip"
+        android:verticalSpacing = "7dip"
+        android:horizontalSpacing = "5dip"
+        
+        android:scrollbars="none" >
+    </com.handmark.pulltorefresh.library.PullToRefreshGridView>
+
+    
+
+</RelativeLayout>

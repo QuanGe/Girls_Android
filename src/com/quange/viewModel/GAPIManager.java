@@ -1,13 +1,17 @@
 package com.quange.viewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,7 +21,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -25,6 +29,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import com.quange.girls.R;
+import com.quange.model.GDouBanModel;
 import com.quange.model.GQiuBaiModel;
 
 public class GAPIManager {
@@ -135,5 +140,40 @@ public class GAPIManager {
 		addToRequestQueue(request);
     }
     
-    
+    public void fetchDouBan(int pageNum,int type,final Listener<List<GDouBanModel>> listener, ErrorListener errorListener)
+    {
+		StringRequest request = new StringRequest("http://www.dbmeinv.com/dbgroup/show.htm?pager_offset="+pageNum+"&cid="+type, new Listener<String>() {
+			public void onResponse(String body) {
+				ArrayList<GDouBanModel> result = new ArrayList<GDouBanModel>();
+				
+				
+			    // if(href.contains("http://www.dbmeinv.com/dbgroup/") && target.equals("_topic_detail"))
+				Document doc = Jsoup.parse(body);                    	
+				Elements eles=doc.getElementsByTag("a");
+		         for(Element e :eles)
+		         {
+		               System.out.println(e.text());
+		               System.out.println(e.attr("href"));
+		               if(e.attr("href") != null &&e.attr("target")!=null)
+		               {
+		            	   if(e.attr("href").contains("http://www.dbmeinv.com/dbgroup/") && e.attr("target").equals("_topic_detail"))
+		            	   {
+		            		   Elements images = e.getElementsByTag("img");
+		            		   for(Element image :images)
+			      		         {
+		            			   GDouBanModel girl = new GDouBanModel();
+		            			   girl.imageDetailUrlStr = e.attr("href");
+		            			   girl.imageUrlStr = image.attr("src");
+		            			   result.add(girl);
+			      		         }
+		            	   }
+		               }
+		         }
+					
+				listener.onResponse(result);
+				
+			}
+		},errorListener);
+		addToRequestQueue(request);
+    }
 }

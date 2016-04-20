@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="volley-src"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="src" path="nineOldAndroids-src"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

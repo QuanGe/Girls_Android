@@ -23,6 +23,7 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -751,7 +752,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 						break;
 					default:
 					case PULL_FROM_START:
-						smoothScrollTo(-getHeaderSize()-60, listener);
+					{
+						
+						int density = (int) getContext().getResources().getDisplayMetrics().density;
+						int headerSize = getHeaderSize();
+						if(headerSize == 0)
+							headerSize = 60*density;
+						
+						smoothScrollTo(-headerSize, listener);
+					}
 						break;
 				}
 			} else {

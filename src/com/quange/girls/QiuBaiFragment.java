@@ -27,55 +27,52 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 		if (fgmView == null) {
 			fgmView = inflater.inflate(R.layout.fragment_qiubai, container, false);
 		
-		}
-
-		ViewGroup parent = (ViewGroup) fgmView.getParent();
-		if (parent != null) {
-			parent.removeView(fgmView);
-		}
-		qiubaiViewPaper = (ViewPager) fgmView.findViewById(R.id.qiubaiViewPaper);
-		
-		qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),0).getView());
-		qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),1).getView());
-		qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),2).getView());
-
-		qiubaiViewPaper.setAdapter(new PagerAdapter() {
-			String[] title = { "最新", "纯图", "最热" };
-			public boolean isViewFromObject(View view, Object o) {
-				return view == o;
-			}
-
-			public int getCount() {
-				return qiubaiViewPaper.getChildCount();
-			}
-
-			public void destroyItem(View container, int position, Object object) {
-			}
-
-			public Object instantiateItem(View container, int position) {
-				return qiubaiViewPaper.getChildAt(position);
-			}
-	
-			public CharSequence getPageTitle(int position) {
-				return title[position];
-			}
+			qiubaiViewPaper = (ViewPager) fgmView.findViewById(R.id.qiubaiViewPaper);
 			
-		});
+			qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),0).getView());
+			qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),1).getView());
+			qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),2).getView());
 
-		//
-		qiubaiTabs = (PagerSlidingTabStrip)fgmView.findViewById(R.id.tabs);
-		qiubaiTabs.setOnPageChangeListener(mPagerChangerListener);
-		qiubaiTabs.setViewPager(qiubaiViewPaper);
-		 //tab 宽度均分
-		qiubaiTabs.setShouldExpand(true);
-		qiubaiTabs.setDividerColor(color.white);
-        //设置选中的滑动指示
-		qiubaiTabs.setIndicatorColor(this.getResources().getColor(R.color.red));
-		qiubaiTabs.setIndicatorHeight(3);
-        //设置背景颜色
-		qiubaiTabs.setBackgroundColor(getResources().getColor(R.color.white));
+			qiubaiViewPaper.setAdapter(new PagerAdapter() {
+				String[] title = { "最新", "纯图", "最热" };
+				public boolean isViewFromObject(View view, Object o) {
+					return view == o;
+				}
+
+				public int getCount() {
+					return qiubaiViewPaper.getChildCount();
+				}
+
+				public void destroyItem(View container, int position, Object object) {
+				}
+
+				public Object instantiateItem(View container, int position) {
+					return qiubaiViewPaper.getChildAt(position);
+				}
 		
+				public CharSequence getPageTitle(int position) {
+					return title[position];
+				}
+				
+			});
 
+			//
+			qiubaiTabs = (PagerSlidingTabStrip)fgmView.findViewById(R.id.tabs);
+			qiubaiTabs.setOnPageChangeListener(mPagerChangerListener);
+			qiubaiTabs.setViewPager(qiubaiViewPaper);
+			 //tab 宽度均分
+			qiubaiTabs.setShouldExpand(true);
+			qiubaiTabs.setDividerColor(color.white);
+	        //设置选中的滑动指示
+			qiubaiTabs.setIndicatorColor(this.getResources().getColor(R.color.red));
+			qiubaiTabs.setIndicatorHeight(3);
+	        //设置背景颜色
+			qiubaiTabs.setBackgroundColor(getResources().getColor(R.color.white));
+			
+
+		}
+
+		
 		return fgmView;
 	}
 	

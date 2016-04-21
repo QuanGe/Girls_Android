@@ -28,66 +28,63 @@ public class DouBanFragment extends Fragment  implements TabListener{
 		super.onCreateView(inflater, container, savedInstanceState);
 		if (fgmView == null) {
 			fgmView = inflater.inflate(R.layout.fragment_douban, container, false);
-		
-		}
 
-		ViewGroup parent = (ViewGroup) fgmView.getParent();
-		if (parent != null) {
-			parent.removeView(fgmView);
-		}
-		doubanViewPaper = (ViewPager) fgmView.findViewById(R.id.doubanViewPaper);
-		
-		subs.add(new GDouBanGridView(getActivity(),3));
-		subs.add(new GDouBanGridView(getActivity(),6));
-		subs.add(new GDouBanGridView(getActivity(),4));
-		subs.add(new GDouBanGridView(getActivity(),2));
-		subs.add(new GDouBanGridView(getActivity(),7));
-		subs.add(new GDouBanGridView(getActivity(),5));
-		
-		for(GDouBanGridView sub :subs)
-		{
-			doubanViewPaper.addView(sub.getView());
-		}
-		
-		doubanViewPaper.setAdapter(new PagerAdapter() {
-			String[] title = { "美腿控","小翘臀","有颜值", "大胸妹","黑丝袜", "大杂烩" };
-			public boolean isViewFromObject(View view, Object o) {
-				return view == o;
-			}
-
-			public int getCount() {
-				return doubanViewPaper.getChildCount();
-			}
-
-			public void destroyItem(View container, int position, Object object) {
-			}
-
-			public Object instantiateItem(View container, int position) {
-				return doubanViewPaper.getChildAt(position);
-			}
-	
-			public CharSequence getPageTitle(int position) {
-				return title[position];
+			doubanViewPaper = (ViewPager) fgmView.findViewById(R.id.doubanViewPaper);
+			
+			subs.add(new GDouBanGridView(getActivity(),3));
+			subs.add(new GDouBanGridView(getActivity(),6));
+			subs.add(new GDouBanGridView(getActivity(),4));
+			subs.add(new GDouBanGridView(getActivity(),2));
+			subs.add(new GDouBanGridView(getActivity(),7));
+			subs.add(new GDouBanGridView(getActivity(),5));
+			
+			for(GDouBanGridView sub :subs)
+			{
+				doubanViewPaper.addView(sub.getView());
 			}
 			
-		});
+			doubanViewPaper.setAdapter(new PagerAdapter() {
+				String[] title = { "美腿控","小翘臀","有颜值", "大胸妹","黑丝袜", "大杂烩" };
+				public boolean isViewFromObject(View view, Object o) {
+					return view == o;
+				}
 
-		GDouBanGridView sub = subs.get(0);
-    	sub.firstLoadData();
-    	
-		//
-		doubanTabs = (PagerSlidingTabStrip)fgmView.findViewById(R.id.tabs);
-		doubanTabs.setOnPageChangeListener(mPagerChangerListener);
-		doubanTabs.setViewPager(doubanViewPaper);
-		 //tab 宽度均分
-		doubanTabs.setShouldExpand(true);
-		doubanTabs.setDividerColor(color.white);
-        //设置选中的滑动指示
-		doubanTabs.setIndicatorColor(this.getResources().getColor(R.color.red));
-		doubanTabs.setIndicatorHeight(3);
-        //设置背景颜色
-		doubanTabs.setBackgroundColor(getResources().getColor(R.color.white));
+				public int getCount() {
+					return doubanViewPaper.getChildCount();
+				}
+
+				public void destroyItem(View container, int position, Object object) {
+				}
+
+				public Object instantiateItem(View container, int position) {
+					return doubanViewPaper.getChildAt(position);
+				}
 		
+				public CharSequence getPageTitle(int position) {
+					return title[position];
+				}
+				
+			});
+
+			GDouBanGridView sub = subs.get(0);
+	    	sub.firstLoadData();
+	    	
+			//
+			doubanTabs = (PagerSlidingTabStrip)fgmView.findViewById(R.id.tabs);
+			doubanTabs.setOnPageChangeListener(mPagerChangerListener);
+			doubanTabs.setViewPager(doubanViewPaper);
+			 //tab 宽度均分
+			doubanTabs.setShouldExpand(true);
+			doubanTabs.setDividerColor(color.white);
+	        //设置选中的滑动指示
+			doubanTabs.setIndicatorColor(this.getResources().getColor(R.color.red));
+			doubanTabs.setIndicatorHeight(3);
+	        //设置背景颜色
+			doubanTabs.setBackgroundColor(getResources().getColor(R.color.white));
+			
+		}
+
+	
 
 		return fgmView;
 	}

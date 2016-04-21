@@ -3,8 +3,10 @@ package com.quange.girls;
 import java.util.ArrayList;
 
 
+import com.quange.views.GDouBanGridView;
 import com.quange.views.GQiuBaiListView;
 import com.quange.views.PagerSlidingTabStrip;
+import com.umeng.analytics.MobclickAgent;
 
 import android.R.color;
 import android.os.Bundle;
@@ -65,6 +67,8 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 				
 			});
 
+			GQiuBaiListView sub = subs.get(0);
+	    	sub.firstLoadData();
 			//
 			qiubaiTabs = (PagerSlidingTabStrip)fgmView.findViewById(R.id.tabs);
 			qiubaiTabs.setOnPageChangeListener(mPagerChangerListener);
@@ -137,5 +141,16 @@ public class QiuBaiFragment extends Fragment implements TabListener{
     public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
 
     }
+    @Override
+    public void onResume() {
+  		super.onResume();
+  		
+  		MobclickAgent.onPageStart("糗百首页");
+  	}
+    @Override
+  	public void onPause() {
+  		super.onPause();
+  		MobclickAgent.onPageStart("糗百首页");
+  	}
 }
 

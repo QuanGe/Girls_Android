@@ -1,17 +1,21 @@
 package com.quange.girls;
-import android.content.Intent;
-import android.content.IntentFilter;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TabHost.OnTabChangeListener;
-
+import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends FragmentActivity {
 
@@ -22,21 +26,30 @@ public class MainActivity extends FragmentActivity {
 	private TextView tv[] = { null, null };
 	private int iconArray[] = {R.drawable.btn_qiubai_drawable,R.drawable.btn_douban_drawable};
 	private View mseduView;
+	protected static boolean isQuit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
         setupTabView();
+        MobclickAgent.updateOnlineConfig(this);
+		MobclickAgent.openActivityDurationTrack(false);
     }
-    public void onResume() {
+    @Override
+	protected void onResume() {
 		super.onResume();
-		
+	
+		MobclickAgent.onPageStart("导航页");
+		MobclickAgent.onResume(this);
 	}
 
-	public void onPause() {
+	@Override
+	protected void onPause() {
 		super.onPause();
-		
+	
+		MobclickAgent.onPageEnd("导航页");
+		MobclickAgent.onPause(this);
 	}
 
 	@Override
@@ -101,4 +114,31 @@ public class MainActivity extends FragmentActivity {
 		return view;
 	}
 
+    @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			boolean flag = false;
+			if (isQuit) {
+				// Intent home = new Intent(Intent.ACTION_MAIN);
+				// home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				// home.addCategory(Intent.CATEGORY_HOME);
+				// startActivity(home);
+				// Process.killProcess(Process.myPid());
+				finish();
+			} else {
+				Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+				isQuit = true;
+				Timer timer = new Timer(); // 实例化Timer定时器对象
+				timer.schedule(new TimerTask() { // schedule方法(安排,计划)需要接收一个TimerTask对象和一个代表毫秒的int值作为参数
+							@Override
+							public void run() {
+								isQuit = false;
+							}
+						}, 3000);
+			}
+			return flag;
+		}
+		return super.onKeyDown(keyCode, event);
+
+	}
 }

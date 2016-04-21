@@ -2,6 +2,7 @@ package com.quange.girls;
 
 import java.util.ArrayList;
 
+
 import com.quange.views.GDouBanGridView;
 import com.quange.views.PagerSlidingTabStrip;
 
@@ -17,12 +18,13 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.umeng.analytics.MobclickAgent;
 public class DouBanFragment extends Fragment  implements TabListener{
 	private View fgmView;
 	private ViewPager doubanViewPaper;
 	private ArrayList<GDouBanGridView> subs= new ArrayList<GDouBanGridView>();
 	private PagerSlidingTabStrip doubanTabs;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -142,6 +144,17 @@ public class DouBanFragment extends Fragment  implements TabListener{
     public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
 
     }
+    @Override
+    public void onResume() {
+		super.onResume();
+		
+		MobclickAgent.onPageStart("豆瓣首页");
+	}
+    @Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPageStart("豆瓣首页");
+	}
 }
 
 

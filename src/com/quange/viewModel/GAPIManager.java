@@ -31,7 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import com.quange.girls.R;
 import com.quange.model.GDouBanModel;
 import com.quange.model.GQiuBaiModel;
-
+import com.umeng.analytics.MobclickAgent;
 public class GAPIManager {
 	private static GAPIManager sharedInstance;
     private RequestQueue requestQueue;
@@ -111,12 +111,24 @@ public class GAPIManager {
 		switch (type) {
 		case 0:
 		    api = "latest";
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "xiaohua_lastest");
+		    else
+		    	MobclickAgent.onEvent(theContext, "xiaohua_lastest_more");
 		    break;
 		case 1:
 		    api = "imgrank";
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "xiaohua_onlyImage");
+		    else
+		    	MobclickAgent.onEvent(theContext, "xiaohua_onlyImage_more");
 		    break;
 		case 2:
 		    api = "suggest";
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "xiaohua_hotest");
+		    else
+		    	MobclickAgent.onEvent(theContext, "xiaohua_hotest_more");
 		    break;
 		}
 		StringRequest request = new StringRequest("http://m2.qiushibaike.com/article/list/"+api+"?page="+pageNum, new Listener<String>() {
@@ -142,6 +154,51 @@ public class GAPIManager {
     
     public void fetchDouBan(int pageNum,int type,final Listener<List<GDouBanModel>> listener, ErrorListener errorListener)
     {
+    	
+    	switch (type) {
+		case 3:
+		 
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "girls_meitui");
+		    else
+		    	MobclickAgent.onEvent(theContext, "girls_meitui_more");
+		    break;
+		case 6:
+		  
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "girls_qiaotun");
+		    else
+		    	MobclickAgent.onEvent(theContext, "girls_qiaotun_more");
+		    break;
+		case 4:
+		   
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "girls_beauty");
+		    else
+		    	MobclickAgent.onEvent(theContext, "girls_beauty_more");
+		    break;
+		case 2:
+			   
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "girls_daxiong");
+		    else
+		    	MobclickAgent.onEvent(theContext, "girls_daxiong_more");
+		    break;
+		case 7:
+			   
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "girls_heisi");
+		    else
+		    	MobclickAgent.onEvent(theContext, "girls_heisi_more");
+		    break;
+		case 5:
+			   
+		    if(pageNum==1)
+		    	MobclickAgent.onEvent(theContext, "girls_zahui");
+		    else
+		    	MobclickAgent.onEvent(theContext, "girls_zahui_more");
+		    break;
+		}
 		StringRequest request = new StringRequest("http://www.dbmeinv.com/dbgroup/show.htm?pager_offset="+pageNum+"&cid="+type, new Listener<String>() {
 			public void onResponse(String body) {
 				ArrayList<GDouBanModel> result = new ArrayList<GDouBanModel>();

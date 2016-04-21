@@ -1,11 +1,14 @@
 package com.quange.girls;
 
+import java.util.ArrayList;
+
+
 import com.quange.views.GQiuBaiListView;
 import com.quange.views.PagerSlidingTabStrip;
 
 import android.R.color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -21,6 +24,7 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 	private View fgmView;
 	private ViewPager qiubaiViewPaper;
 	private PagerSlidingTabStrip qiubaiTabs;
+	private ArrayList<GQiuBaiListView> subs= new ArrayList<GQiuBaiListView>();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -29,10 +33,15 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 		
 			qiubaiViewPaper = (ViewPager) fgmView.findViewById(R.id.qiubaiViewPaper);
 			
-			qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),0).getView());
-			qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),1).getView());
-			qiubaiViewPaper.addView(new GQiuBaiListView(getActivity(),2).getView());
-
+			subs.add(new GQiuBaiListView(getActivity(),0));
+			subs.add(new GQiuBaiListView(getActivity(),1));
+			subs.add(new GQiuBaiListView(getActivity(),2));
+			
+			
+			for(GQiuBaiListView sub :subs)
+			{
+				qiubaiViewPaper.addView(sub.getView());
+			}
 			qiubaiViewPaper.setAdapter(new PagerAdapter() {
 				String[] title = { "最新", "纯图", "最热" };
 				public boolean isViewFromObject(View view, Object o) {
@@ -71,6 +80,10 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 			
 
 		}
+		else
+		{
+			qiubaiTabs.resetPagerOnPageChangeListener();
+		}
 
 		
 		return fgmView;
@@ -85,18 +98,19 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 
         @Override
         public void onPageSelected(int position) {
-            switch (position){
-                case 0:
-                    //MyToast.makeText(MainActivity.this, "the page is " + "messager", Toast.LENGTH_SHORT);
-                    break;
-                case 1:
-                    //MyToast.makeText(MainActivity.this, "the page is " + "news", Toast.LENGTH_SHORT);
-                    break;
-                case 2:
-                    //MyToast.makeText(MainActivity.this, "the page is " + "user", Toast.LENGTH_SHORT);
-                    break;
-            }
-
+//            switch (position){
+//                case 0:
+//                    //MyToast.makeText(MainActivity.this, "the page is " + "messager", Toast.LENGTH_SHORT);
+//                    break;
+//                case 1:
+//                    //MyToast.makeText(MainActivity.this, "the page is " + "news", Toast.LENGTH_SHORT);
+//                    break;
+//                case 2:
+//                    //MyToast.makeText(MainActivity.this, "the page is " + "user", Toast.LENGTH_SHORT);
+//                    break;
+//            }
+        	GQiuBaiListView sub = subs.get(position);
+        	sub.firstLoadData();
 
         }
 

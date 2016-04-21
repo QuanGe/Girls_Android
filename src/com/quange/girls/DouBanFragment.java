@@ -83,6 +83,10 @@ public class DouBanFragment extends Fragment  implements TabListener{
 			doubanTabs.setBackgroundColor(getResources().getColor(R.color.white));
 			
 		}
+		else
+		{
+			doubanTabs.resetPagerOnPageChangeListener();
+		}
 
 	
 

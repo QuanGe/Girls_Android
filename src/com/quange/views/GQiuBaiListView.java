@@ -105,15 +105,21 @@ public class GQiuBaiListView implements OnItemClickListener{
 				}
 			}
 		});
-		
-		lList.post(new Runnable() {
-		      @Override public void run() {
-		    	  lList.setRefreshing(true);
-		      }
-		 });
+	
 		
 	}
 
+	public void firstLoadData()
+	{
+		if(mLSList.size()==0)
+		{
+			lList.post(new Runnable() {
+			      @Override public void run() {
+			    	  lList.setRefreshing(true);
+			      }
+			 });
+		}
+	}
 	public void refresh(final boolean isRefresh) {
 			mCurPage = isRefresh ? 1 : ++mCurPage ;
 			GAPIManager.getInstance(mAct).fetchQiuBai(mCurPage, qiubaiType, new Listener<List<GQiuBaiModel>>(){

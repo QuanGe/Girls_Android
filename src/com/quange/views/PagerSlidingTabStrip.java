@@ -196,6 +196,12 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         this.pager.addOnPageChangeListener(pageListener);
         this.notifyDataSetChanged();
     }
+    
+    public void resetPagerOnPageChangeListener()
+    {
+    	this.pager.removeOnPageChangeListener(pageListener);
+    	this.pager.addOnPageChangeListener(pageListener);
+    }
 
     /****
      * 设置状态监听

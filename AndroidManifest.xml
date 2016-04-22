@@ -45,6 +45,10 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
+         <activity
+            android:name=".DouBanPhotosActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
       <meta-data
             android:name="UMENG_APPKEY"
             android:value="5718e2d767e58edb410035fc" >

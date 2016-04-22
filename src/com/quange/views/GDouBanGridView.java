@@ -2,8 +2,9 @@ package com.quange.views;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.quange.girls.DouBanPhotosActivity;
 import com.quange.girls.R;
 import com.quange.model.GDouBanModel;
 
@@ -175,7 +177,23 @@ public class GDouBanGridView implements OnItemClickListener{
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		
+		try {
+			Bundle bundle = new Bundle();
+			// bundle.putString("title",
+			// this.getResources().getString(R.string.action_find_password));
+			String allUrl = "";
+			for (GDouBanModel girl : mLSList)
+			{
+				allUrl = allUrl+girl.imageUrlStr+"*";
+			}
+			bundle.putString("allUrl", allUrl);
+			bundle.putString("curUrl", mLSList.get(position).imageUrlStr);
+			Intent intent = new Intent(this.mAct, DouBanPhotosActivity.class);
+			intent.putExtras(bundle);
+			this.mAct.startActivity(intent);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

@@ -9,6 +9,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="nineOldAndroids-src"/>
 	<classpathentry kind="src" path="jsoup-src"/>
+	<classpathentry kind="src" path="photoView-src"/>
 	<classpathentry kind="lib" path="/Users/zhangruquan/GitHub/Girls_Android/libs/umeng-analytics-v5.2.4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

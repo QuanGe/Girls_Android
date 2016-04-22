@@ -9,5 +9,5 @@
 	<!-- MainActivity -->
     <string name="qiubai">笑话</string>
     <string name="douban">美女</string>
-    
+    <string name="save">保存</string>
 </resources>

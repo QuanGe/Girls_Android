@@ -1,5 +1,9 @@
 package com.quange.girls;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.quange.viewModel.GAPIManager;
@@ -7,14 +11,20 @@ import com.quange.viewModel.GAPIManager;
 import uk.co.senab.photoview.PhotoView;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DouBanPhotosActivity extends Activity {
 	private ViewPager photoViewPager;
@@ -38,6 +48,22 @@ public class DouBanPhotosActivity extends Activity {
 			
 		}
        
+		saveBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			
+				PhotoView p = (PhotoView)photoViewPager.getChildAt(photoViewPager.getCurrentItem());
+				BitmapDrawable b =  (BitmapDrawable)p.getDrawable();
+				String curI =  allUrls[photoViewPager.getCurrentItem()];
+				String[] name = curI.split("\\/");
+				try {
+					saveBitmapToFile(b.getBitmap(),getSDPath()+"/ysw/yanshouwan/"+name[name.length-1]);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	
 		photoViewPager.setAdapter(new PagerAdapter() {
 				
@@ -79,5 +105,59 @@ public class DouBanPhotosActivity extends Activity {
 		
 		
 	}
+	
+	/** 
+     * Save Bitmap to a file.保存图片到SD卡。 
+     *  
+     * @param bitmap 
+     * @param file 
+     * @return error message if the saving is failed. null if the saving is 
+     *         successful. 
+     * @throws IOException 
+     */  
+    public void saveBitmapToFile(Bitmap bitmap, String _file)  
+            throws IOException {//_file = <span style="font-family: Arial, Helvetica, sans-serif;">getSDPath()+"</span><span style="font-family: Arial, Helvetica, sans-serif;">/xx自定义文件夹</span><span style="font-family: Arial, Helvetica, sans-serif;">/hot.png</span><span style="font-family: Arial, Helvetica, sans-serif;">"</span>  
+        BufferedOutputStream os = null;  
+        try {  
+            File file = new File(_file);  
+            // String _filePath_file.replace(File.separatorChar +  
+            // file.getName(), "");  
+            int end = _file.lastIndexOf(File.separator);  
+            String _filePath = _file.substring(0, end);  
+            File filePath = new File(_filePath);  
+            if (!filePath.exists()) {  
+                filePath.mkdirs();  
+            }  
+            file.createNewFile();  
+            os = new BufferedOutputStream(new FileOutputStream(file));  
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);  
+        } finally {  
+            if (os != null) {  
+                try {  
+                    os.close();  
+                    Toast.makeText(this, "已经成功保存在"+_file, Toast.LENGTH_SHORT).show();
+                    
+                } catch (IOException e) {  
+                	System.out.println(e.getMessage());
+                	Toast.makeText(this, "保存失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }  
+            }  
+        }  
+    }  
+    /** 
+     * 获取SDK路径 
+     * @return 
+     */  
+    public String getSDPath(){   
+           File sdDir = null;   
+           boolean sdCardExist = Environment.getExternalStorageState()     
+                               .equals(android.os.Environment.MEDIA_MOUNTED);   //判断sd卡是否存在   
+           if   (sdCardExist)     
+           {                                 
+             sdDir = Environment.getExternalStorageDirectory();//获取跟目录   
+          }     
+           return sdDir.toString();   
+             
+    }  
 	
 }

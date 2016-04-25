@@ -1,6 +1,7 @@
 package com.quange.views;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import com.android.volley.VolleyError;
@@ -35,7 +36,8 @@ public class GQiuBaiListView implements OnItemClickListener{
 	private Activity mAct;
 	private PullToRefreshListView lList;
 	private GQiuBaiAdapter lAdapter;
-	private List<GQiuBaiModel> mLSList = new ArrayList<GQiuBaiModel>();
+	private ArrayList<GQiuBaiModel> mLSList = new ArrayList<GQiuBaiModel>();
+	private ArrayList<String> mListIds = new ArrayList<String>();
 	private RelativeLayout rlW;
 	private TextView tvCW;
 	private String appPath;
@@ -120,14 +122,38 @@ public class GQiuBaiListView implements OnItemClickListener{
 			 });
 		}
 	}
+	
+	public ArrayList<GQiuBaiModel> removeDuplicate(List<GQiuBaiModel> mLSList2){
+		   return new ArrayList<GQiuBaiModel>(new HashSet<GQiuBaiModel>(mLSList2));
+		}
+	
 	public void refresh(final boolean isRefresh) {
 			mCurPage = isRefresh ? 1 : ++mCurPage ;
 			GAPIManager.getInstance(mAct).fetchQiuBai(mCurPage, qiubaiType, new Listener<List<GQiuBaiModel>>(){
 				@Override
 				public void onResponse(List<GQiuBaiModel> response) {
 					if(isRefresh)
+					{
 						mLSList.clear();
-					mLSList.addAll(response);
+						mListIds.clear();
+					}
+						
+					for(GQiuBaiModel model :response)
+					{
+						if(mListIds.indexOf(model.id+"") != -1)
+						{
+							System.out.println("已经存在，去重");
+						}
+						else
+						{
+							mListIds.add(model.id+"");
+							mLSList.add(model);
+							
+						}
+					}
+					//mLSList.addAll(response);
+					
+					
 					lAdapter.notifyDataSetChanged();
 					
 				}

@@ -19,7 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.umeng.analytics.MobclickAgent;
-public class DouBanFragment extends Fragment  implements TabListener{
+public class DouBanFragment extends Fragment {
 	private View fgmView;
 	private ViewPager doubanViewPaper;
 	private ArrayList<GDouBanGridView> subs= new ArrayList<GDouBanGridView>();
@@ -115,7 +115,7 @@ public class DouBanFragment extends Fragment  implements TabListener{
 //                    //MyToast.makeText(MainActivity.this, "the page is " + "user", Toast.LENGTH_SHORT);
 //                    break;
 //            }
-
+        	doubanViewPaper.requestLayout();
         	GDouBanGridView sub = subs.get(position);
         	sub.firstLoadData();
         	
@@ -129,21 +129,21 @@ public class DouBanFragment extends Fragment  implements TabListener{
     };
 
 
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
-
-    	doubanViewPaper.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
+//    @Override
+//    public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
+//
+//    	doubanViewPaper.setCurrentItem(tab.getPosition());
+//    }
+//
+//    @Override
+//    public void onTabUnselected(Tab tab, FragmentTransaction fragmentTransaction) {
+//
+//    }
+//
+//    @Override
+//    public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
+//
+//    }
     @Override
     public void onResume() {
 		super.onResume();

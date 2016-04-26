@@ -48,8 +48,22 @@ public class GQiuBaiListView implements OnItemClickListener{
 		super();
 		this.mAct = act;
 		this.qiubaiType = type;
+		
 		mView = View.inflate(mAct, R.layout.view_qiubai, null);
 		appPath = mAct.getApplicationContext().getFilesDir().getAbsolutePath();
+//		switch (type) {
+//		case 0:
+//			mView.setBackgroundColor(mAct.getResources().getColor(R.color.orange) );
+//			break;
+//		case 1:
+//			mView.setBackgroundColor(mAct.getResources().getColor(R.color.red) );
+//			break;
+//		case 2:
+//			mView.setBackgroundColor(mAct.getResources().getColor(R.color.line_color) );
+//			break;
+//		default:
+//			break;
+//		}
 		initView();
 	}
 

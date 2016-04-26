@@ -5,14 +5,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.quange.viewModel.GAPIManager;
 
 import uk.co.senab.photoview.PhotoView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
@@ -21,10 +24,13 @@ import android.support.v4.view.ViewPager.LayoutParams;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
 
 public class DouBanPhotosActivity extends Activity {
 	private ViewPager photoViewPager;
@@ -32,6 +38,44 @@ public class DouBanPhotosActivity extends Activity {
 	private Button saveBtn;
 	private String curUrl;
 	private String[] allUrls ;
+	
+	public class CurriAdapter extends PagerAdapter {
+
+		private View mCurrentView;
+	    
+	    @Override
+	    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+	        mCurrentView = (View)object;
+	    }
+	                                             
+	    public View getPrimaryItem() {
+	        return mCurrentView;
+	    }
+			public boolean isViewFromObject(View view, Object o) {
+				return view == o;
+			}
+
+			public int getCount() {
+				return allUrls.length;
+			}
+
+			public void destroyItem(View container, int position, Object object) {
+			}
+
+			public Object instantiateItem(View container, int position) {
+				indexTV.setText(position+"/"+allUrls.length);
+				PhotoView photoView = new PhotoView(container.getContext());
+	            
+				GAPIManager.getInstance(null).getImageLoader().displayImage(allUrls[position], photoView, GAPIManager.getInstance(null).options);
+	            // Now just add PhotoView to ViewPager and return it
+	            ((ViewPager) container).addView(photoView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+	            return photoView;
+			}
+
+
+	}
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +96,15 @@ public class DouBanPhotosActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 			
-				PhotoView p = (PhotoView)photoViewPager.getChildAt(photoViewPager.getCurrentItem());
+				CurriAdapter a = (CurriAdapter)photoViewPager.getAdapter();
+				PhotoView p = (PhotoView) a.getPrimaryItem();
 				BitmapDrawable b =  (BitmapDrawable)p.getDrawable();
 				String curI =  allUrls[photoViewPager.getCurrentItem()];
-				String[] name = curI.split("\\/");
+				String[] names = curI.split("\\/");
+				String  savename = names[names.length-1];
+				//savename = "-01.jpg";
 				try {
-					saveBitmapToFile(b.getBitmap(),getSDPath()+"/ysw/yanshouwan/"+name[name.length-1]);
+					saveBitmapToFile(b.getBitmap(),getSDPath()+"/ysw/yanshouwan/"+savename);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -65,33 +112,7 @@ public class DouBanPhotosActivity extends Activity {
 			}
 		});
 	
-		photoViewPager.setAdapter(new PagerAdapter() {
-				
-				public boolean isViewFromObject(View view, Object o) {
-					return view == o;
-				}
-
-				public int getCount() {
-					return allUrls.length;
-				}
-
-				public void destroyItem(View container, int position, Object object) {
-				}
-
-				public Object instantiateItem(View container, int position) {
-					indexTV.setText(position+"/"+allUrls.length);
-					PhotoView photoView = new PhotoView(container.getContext());
-		            
-					GAPIManager.getInstance(null).getImageLoader().displayImage(allUrls[position], photoView, GAPIManager.getInstance(null).options);
-		            // Now just add PhotoView to ViewPager and return it
-		            ((ViewPager) container).addView(photoView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
-		            return photoView;
-				}
-		
-				
-				
-			});
+		photoViewPager.setAdapter(new CurriAdapter() );
 		
 		for(int i = 0;i<allUrls.length;i++)
 		{
@@ -102,7 +123,6 @@ public class DouBanPhotosActivity extends Activity {
 				break;
 			}
 		}
-		
 		
 	}
 	
@@ -134,8 +154,11 @@ public class DouBanPhotosActivity extends Activity {
         } finally {  
             if (os != null) {  
                 try {  
+                	os.flush();
                     os.close();  
                     Toast.makeText(this, "已经成功保存在"+_file, Toast.LENGTH_SHORT).show();
+                    this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri
+                            .parse("file://" + _file)));
                     
                 } catch (IOException e) {  
                 	System.out.println(e.getMessage());

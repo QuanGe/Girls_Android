@@ -120,6 +120,10 @@ public class GDouBanGridView implements OnItemClickListener{
 			      }
 			 });
 		}
+		else
+		{
+			System.out.println("喝喝喝喝喝喝喝");
+		}
 	}
 
 	public void refresh(final boolean isRefresh) {

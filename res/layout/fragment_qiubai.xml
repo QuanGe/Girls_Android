@@ -13,12 +13,12 @@
         android:layout_height="50dp">
 
     </com.quange.views.PagerSlidingTabStrip>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/qiubaiViewPaper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="1px"
-      
         android:background="@color/white" />
 
 </LinearLayout>

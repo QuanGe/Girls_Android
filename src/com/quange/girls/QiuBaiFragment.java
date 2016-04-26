@@ -22,7 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class QiuBaiFragment extends Fragment implements TabListener{
+public class QiuBaiFragment extends Fragment{
 	private View fgmView;
 	private ViewPager qiubaiViewPaper;
 	private PagerSlidingTabStrip qiubaiTabs;
@@ -34,7 +34,7 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 			fgmView = inflater.inflate(R.layout.fragment_qiubai, container, false);
 		
 			qiubaiViewPaper = (ViewPager) fgmView.findViewById(R.id.qiubaiViewPaper);
-			
+		
 			subs.add(new GQiuBaiListView(getActivity(),0));
 			subs.add(new GQiuBaiListView(getActivity(),1));
 			subs.add(new GQiuBaiListView(getActivity(),2));
@@ -42,7 +42,8 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 			
 			for(GQiuBaiListView sub :subs)
 			{
-				qiubaiViewPaper.addView(sub.getView());
+				View v = sub.getView();
+				qiubaiViewPaper.addView(v);
 			}
 			qiubaiViewPaper.setAdapter(new PagerAdapter() {
 				String[] title = { "最新", "纯图", "最热" };
@@ -51,14 +52,16 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 				}
 
 				public int getCount() {
-					return qiubaiViewPaper.getChildCount();
+					int num = qiubaiViewPaper.getChildCount();
+					return num;
 				}
 
 				public void destroyItem(View container, int position, Object object) {
 				}
 
 				public Object instantiateItem(View container, int position) {
-					return qiubaiViewPaper.getChildAt(position);
+					Object v = qiubaiViewPaper.getChildAt(position);
+					return v;
 				}
 		
 				public CharSequence getPageTitle(int position) {
@@ -113,6 +116,7 @@ public class QiuBaiFragment extends Fragment implements TabListener{
 //                    //MyToast.makeText(MainActivity.this, "the page is " + "user", Toast.LENGTH_SHORT);
 //                    break;
 //            }
+        	qiubaiViewPaper.requestLayout();
         	GQiuBaiListView sub = subs.get(position);
         	sub.firstLoadData();
 
@@ -125,22 +129,22 @@ public class QiuBaiFragment extends Fragment implements TabListener{
         }
     };
 
-
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
-
-    	qiubaiViewPaper.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
+//
+//    @Override
+//    public void onTabSelected(Tab tab, FragmentTransaction fragmentTransaction) {
+//
+//    	qiubaiViewPaper.setCurrentItem(tab.getPosition());
+//    }
+//
+//    @Override
+//    public void onTabUnselected(Tab tab, FragmentTransaction fragmentTransaction) {
+//
+//    }
+//
+//    @Override
+//    public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
+//
+//    }
     @Override
     public void onResume() {
   		super.onResume();

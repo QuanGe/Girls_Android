@@ -14,13 +14,17 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.qq.e.ads.interstitial.AbstractInterstitialADListener;
+import com.qq.e.ads.interstitial.InterstitialAD;
 import com.quange.girls.R;
 import com.quange.model.GQiuBaiModel;
+import com.quange.viewModel.Constants;
 import com.quange.viewModel.GAPIManager;
 import com.quange.viewModel.GQiuBaiAdapter;
 
 import android.app.Activity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -43,7 +47,8 @@ public class GQiuBaiListView implements OnItemClickListener{
 	private String appPath;
 	private int qiubaiType;
 	private int mCurPage = 1;
-	
+	private PagerSlidingTabStrip doubanTabs;
+	private InterstitialAD iad;
 	public GQiuBaiListView(Activity act, int type) {
 		super();
 		this.mAct = act;
@@ -143,6 +148,8 @@ public class GQiuBaiListView implements OnItemClickListener{
 	
 	public void refresh(final boolean isRefresh) {
 			mCurPage = isRefresh ? 1 : ++mCurPage ;
+			if(qiubaiType==1&&mCurPage%10==4)
+				showAD();
 			GAPIManager.getInstance(mAct).fetchQiuBai(mCurPage, qiubaiType, new Listener<List<GQiuBaiModel>>(){
 				@Override
 				public void onResponse(List<GQiuBaiModel> response) {
@@ -210,7 +217,28 @@ public class GQiuBaiListView implements OnItemClickListener{
 			}
 		}, 2000);
 	}
+	private InterstitialAD getIAD() {
+        if (iad == null) {
+          iad = new InterstitialAD(mAct, Constants.APPID, Constants.InterteristalPosID);
+        }
+        return iad;
+      }
+    private void showAD() {
+        getIAD().setADListener(new AbstractInterstitialADListener() {
 
+          @Override
+          public void onNoAD(int arg0) {
+            Log.i("AD_DEMO", "LoadInterstitialAd Fail:" + arg0);
+          }
+
+          @Override
+          public void onADReceive() {
+              Log.i("AD_DEMO", "onADReceive");
+            iad.show();
+          }
+        });
+        iad.loadAD();
+      }
 
 
 	@Override

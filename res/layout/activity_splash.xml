@@ -26,5 +26,12 @@
         android:textColor="#2f2f2f"
         android:textSize="14dp"
         android:visibility="visible" />
+    
+     <!-- 开屏广告容器，不得小于400dp -->
+    <FrameLayout
+        android:id="@+id/splash_container"
+   
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

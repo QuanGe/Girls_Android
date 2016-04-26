@@ -11,5 +11,6 @@
 	<classpathentry kind="src" path="jsoup-src"/>
 	<classpathentry kind="src" path="photoView-src"/>
 	<classpathentry kind="lib" path="/Users/zhangruquan/GitHub/Girls_Android/libs/umeng-analytics-v5.2.4.jar"/>
+	<classpathentry kind="lib" path="/Users/zhangruquan/GitHub/Girls_Android/libs/GDTUnionSDK.4.8.523.min.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

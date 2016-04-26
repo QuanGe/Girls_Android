@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.banner.BannerView;
+
+import com.quange.viewModel.Constants;
 import com.quange.viewModel.GAPIManager;
 import com.umeng.analytics.MobclickAgent;
 
@@ -39,7 +44,8 @@ public class DouBanPhotosActivity extends Activity {
 	private Button saveBtn;
 	private String curUrl;
 	private String[] allUrls ;
-	
+	private ViewGroup bannerContainer;
+	private BannerView bv;
 	public class CurriAdapter extends PagerAdapter {
 
 		private View mCurrentView;
@@ -76,7 +82,23 @@ public class DouBanPhotosActivity extends Activity {
 
 
 	}
-	
+	 private void initBanner() {
+		    this.bv = new BannerView(this, ADSize.BANNER, Constants.APPID, Constants.BannerPosID);
+		    bv.setRefresh(30);
+		    bv.setADListener(new AbstractBannerADListener() {
+
+		      @Override
+		      public void onNoAD(int arg0) {
+		        Log.i("AD_DEMO", "BannerNoAD，eCode=" + arg0);
+		      }
+
+		      @Override
+		      public void onADReceiv() {
+		        Log.i("AD_DEMO", "ONBannerReceive");
+		      }
+		    });
+		    bannerContainer.addView(bv);
+		  }
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +147,9 @@ public class DouBanPhotosActivity extends Activity {
 				break;
 			}
 		}
-		
+		bannerContainer = (ViewGroup) this.findViewById(R.id.bannerContainer);
+	    this.initBanner();
+	    this.bv.loadAD();
 	}
 	
 	/** 

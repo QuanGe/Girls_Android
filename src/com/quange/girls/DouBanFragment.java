@@ -1,5 +1,9 @@
 package com.quange.girls;
 
+import com.qq.e.ads.interstitial.AbstractInterstitialADListener;
+import com.qq.e.ads.interstitial.InterstitialAD;
+import com.quange.viewModel.Constants;
+
 import java.util.ArrayList;
 
 
@@ -15,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +29,7 @@ public class DouBanFragment extends Fragment {
 	private ViewPager doubanViewPaper;
 	private ArrayList<GDouBanGridView> subs= new ArrayList<GDouBanGridView>();
 	private PagerSlidingTabStrip doubanTabs;
-	
+	private InterstitialAD iad;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -59,6 +64,7 @@ public class DouBanFragment extends Fragment {
 				}
 
 				public Object instantiateItem(View container, int position) {
+					
 					return doubanViewPaper.getChildAt(position);
 				}
 		
@@ -118,7 +124,8 @@ public class DouBanFragment extends Fragment {
         	doubanViewPaper.requestLayout();
         	GDouBanGridView sub = subs.get(position);
         	sub.firstLoadData();
-        	
+        	if(position==1||position==3||position==4)
+				showAD();
         }
 
         @Override
@@ -144,6 +151,29 @@ public class DouBanFragment extends Fragment {
 //    public void onTabReselected(Tab tab, FragmentTransaction fragmentTransaction) {
 //
 //    }
+    
+    private InterstitialAD getIAD() {
+        if (iad == null) {
+          iad = new InterstitialAD(getActivity(), Constants.APPID, Constants.InterteristalPosID);
+        }
+        return iad;
+      }
+    private void showAD() {
+        getIAD().setADListener(new AbstractInterstitialADListener() {
+
+          @Override
+          public void onNoAD(int arg0) {
+            Log.i("AD_DEMO", "LoadInterstitialAd Fail:" + arg0);
+          }
+
+          @Override
+          public void onADReceive() {
+              Log.i("AD_DEMO", "onADReceive");
+            iad.show();
+          }
+        });
+        iad.loadAD();
+      }
     @Override
     public void onResume() {
 		super.onResume();

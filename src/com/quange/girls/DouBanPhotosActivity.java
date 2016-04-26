@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.quange.viewModel.GAPIManager;
+import com.umeng.analytics.MobclickAgent;
 
 import uk.co.senab.photoview.PhotoView;
 
@@ -91,7 +92,8 @@ public class DouBanPhotosActivity extends Activity {
 			allUrls = all.split("\\*");
 			
 		}
-       
+		MobclickAgent.onEvent(this, "girls_detail");
+		
 		saveBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -138,6 +140,7 @@ public class DouBanPhotosActivity extends Activity {
     public void saveBitmapToFile(Bitmap bitmap, String _file)  
             throws IOException {//_file = <span style="font-family: Arial, Helvetica, sans-serif;">getSDPath()+"</span><span style="font-family: Arial, Helvetica, sans-serif;">/xx自定义文件夹</span><span style="font-family: Arial, Helvetica, sans-serif;">/hot.png</span><span style="font-family: Arial, Helvetica, sans-serif;">"</span>  
         BufferedOutputStream os = null;  
+        MobclickAgent.onEvent(this, "girls_detail_save");
         try {  
             File file = new File(_file);  
             // String _filePath_file.replace(File.separatorChar +  
